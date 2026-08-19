@@ -14,7 +14,7 @@ public interface IOrderRepository
     /// <summary>
     /// Получить список заказов с пагинацией.
     /// </summary>
-    Task<IReadOnlyList<Order>> ListAllAsync(int offset, int limit, CancellationToken cancellationToken);
+    Task<IReadOnlyList<Order>> GetAllAsync(int offset, int limit, CancellationToken cancellationToken);
     
     /// <summary>
     /// Добавить заказ.

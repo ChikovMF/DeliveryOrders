@@ -1,16 +1,19 @@
-﻿namespace Domain.Orders;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
+
+namespace Domain.Orders;
 
 /// <summary>
 /// Заказ.
 /// </summary>
 public sealed class Order
 {
-    private Order(OrderNumber number, 
-        string senderCity, 
-        string senderAddress, 
+    private Order(OrderNumber number,
+        string senderCity,
+        string senderAddress,
         string recipientCity,
-        string recipientAddress, 
-        decimal weight, 
+        string recipientAddress,
+        decimal weight,
         DateTimeOffset pickupDate)
     {
         Number = number;
@@ -56,4 +59,65 @@ public sealed class Order
     /// Дата и время забора.
     /// </summary>
     public DateTimeOffset PickupDate { get; }
+
+    public static bool TryCreate(
+        string senderCity,
+        string senderAddress,
+        string recipientCity,
+        string recipientAddress,
+        decimal weight,
+        DateTimeOffset pickupDate,
+        [NotNullWhen(true)] out Order? order,
+        [NotNullWhen(false)] out string? error)
+    {
+        order = null;
+        error = null;
+
+        if (string.IsNullOrWhiteSpace(senderCity))
+        {
+            error = "Город отправителя обязателен";
+            return false;
+        }
+
+        if (string.IsNullOrWhiteSpace(senderAddress))
+        {
+            error = "Адрес отправителя обязателен";
+            return false;
+        }
+
+        if (string.IsNullOrWhiteSpace(recipientCity))
+        {
+            error = "Город получателя обязателен";
+            return false;
+        }
+
+        if (string.IsNullOrWhiteSpace(recipientAddress))
+        {
+            error = "Адрес получателя обязателен";
+            return false;
+        }
+
+        if (weight <= 0)
+        {
+            error = "Вес груза должен быть больше нуля";
+            return false;
+        }
+
+        if (pickupDate < DateTimeOffset.UtcNow)
+        {
+            error = "Дата забора не может быть в прошлом";
+            return false;
+        }
+
+        order = new Order(
+            OrderNumber.New(),
+            senderCity,
+            senderAddress,
+            recipientCity,
+            recipientAddress,
+            weight,
+            pickupDate);
+
+        return true;
+    }
 }
