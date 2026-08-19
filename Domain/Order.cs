@@ -6,9 +6,9 @@
 public sealed class Order
 {
     /// <summary>
-    /// Идентификатор.
+    /// Номер.
     /// </summary>
-    public int Id { get; set; }
+    public OrderNumber Number { get; set; }
 
     /// <summary>
     /// Город отправителя.
