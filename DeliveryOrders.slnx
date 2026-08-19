@@ -2,5 +2,4 @@
   <Project Path="Application/Application.csproj" />
   <Project Path="Domain/Domain.csproj" />
   <Project Path="Store/Store.csproj" />
-  <Project Path="Web.Host/Web.Host.csproj" />
 </Solution>
