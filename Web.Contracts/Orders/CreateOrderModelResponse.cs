@@ -8,5 +8,5 @@ public sealed class CreateOrderModelResponse
     /// <summary>
     /// Номер заказа.
     /// </summary>
-    public string Number { get; init; }
+    public string? Number { get; init; }
 }

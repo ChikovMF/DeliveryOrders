@@ -24,6 +24,16 @@ public sealed class OrderController(IOrderService orderService) : ControllerBase
         int offset = 0,
         int limit = 100)
     {
+        if (offset < 0)
+        {
+            return BadRequest("Offset должен быть неотрицательным числом");
+        }
+
+        if (limit <= 0)
+        {
+            return BadRequest("Limit должен быть положительным числом");
+        }
+
         var result = await orderService.GetAllAsync(offset, limit, cancellationToken);
 
         return Ok(result.ToResponse(limit, offset));
