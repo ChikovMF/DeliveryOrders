@@ -8,7 +8,7 @@ namespace Domain.Orders;
 public sealed record OrderNumber
 {
     private const char Delimiter = '_';
-    private const string Prefix = "ON";
+    private const string Prefix = "ON"; 
 
     private readonly string _value;
 

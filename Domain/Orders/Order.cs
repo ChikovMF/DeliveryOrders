@@ -61,6 +61,7 @@ public sealed class Order
     public DateTimeOffset PickupDate { get; }
 
     public static bool TryCreate(
+        OrderNumber orderNumber,
         string senderCity,
         string senderAddress,
         string recipientCity,
@@ -68,49 +69,46 @@ public sealed class Order
         decimal weight,
         DateTimeOffset pickupDate,
         [NotNullWhen(true)] out Order? order,
-        [NotNullWhen(false)] out string? error)
+        [NotNullWhen(false)] out IReadOnlyList<string>? errors)
     {
         order = null;
-        error = null;
+        errors = null;
+
+        var errorList = new List<string>();
 
         if (string.IsNullOrWhiteSpace(senderCity))
         {
-            error = "Город отправителя обязателен";
-            return false;
+            errorList.Add("Город отправителя обязателен");
         }
 
         if (string.IsNullOrWhiteSpace(senderAddress))
         {
-            error = "Адрес отправителя обязателен";
-            return false;
+            errorList.Add("Адрес отправителя обязателен");
         }
 
         if (string.IsNullOrWhiteSpace(recipientCity))
         {
-            error = "Город получателя обязателен";
-            return false;
+            errorList.Add("Город получателя обязателен");
         }
 
         if (string.IsNullOrWhiteSpace(recipientAddress))
         {
-            error = "Адрес получателя обязателен";
-            return false;
+            errorList.Add("Адрес получателя обязателен");
         }
 
         if (weight <= 0)
         {
-            error = "Вес груза должен быть больше нуля";
-            return false;
+            errorList.Add("Вес груза должен быть больше нуля");
         }
 
-        if (pickupDate < DateTimeOffset.UtcNow)
+        if (errorList.Any())
         {
-            error = "Дата забора не может быть в прошлом";
+            errors = errorList;
             return false;
         }
 
         order = new Order(
-            OrderNumber.New(),
+            orderNumber,
             senderCity,
             senderAddress,
             recipientCity,
@@ -119,5 +117,29 @@ public sealed class Order
             pickupDate);
 
         return true;
+    }
+
+    public static bool TryCreateNew(
+        string senderCity,
+        string senderAddress,
+        string recipientCity,
+        string recipientAddress,
+        decimal weight,
+        DateTimeOffset pickupDate,
+        [NotNullWhen(true)] out Order? order,
+        [NotNullWhen(false)] out IReadOnlyList<string>? errors)
+    {
+        var orderNumber = OrderNumber.New();
+
+        return TryCreate(
+            orderNumber,
+            senderCity,
+            senderAddress,
+            recipientCity,
+            recipientAddress,
+            weight,
+            pickupDate,
+            out order,
+            out errors);
     }
 }
