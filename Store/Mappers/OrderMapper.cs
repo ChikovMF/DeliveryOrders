@@ -8,15 +8,15 @@ internal static class OrderMapper
     public static OrderRecord ToRecord(this Order order)
     {
         return new OrderRecord
-        {
-            Number = order.Number.ToString(),
-            SenderCity = order.SenderCity,
-            SenderAddress = order.SenderAddress,
-            RecipientCity = order.RecipientCity,
-            RecipientAddress = order.RecipientAddress,
-            Weight = order.Weight,
-            PickupDate = order.PickupDate
-        };
+        (
+            order.Number.ToString(),
+            order.SenderCity,
+            order.SenderAddress,
+            order.RecipientCity,
+            order.RecipientAddress,
+            order.Weight,
+            order.PickupDate
+        );
     }
 
     public static Order ToDomain(this OrderRecord record)

@@ -12,35 +12,28 @@ namespace Web.Host.Controllers;
 /// </summary>
 [ApiController]
 [Route("api/orders")]
-public sealed class OrderController : ControllerBase
+public sealed class OrderController(IOrderService orderService) : ControllerBase
 {
-    private readonly IOrderService _orderService;
-
-    public OrderController(IOrderService orderService)
-    {
-        _orderService = orderService;
-    }
-
     /// <summary>
-    /// Получить все паллеты
+    /// Получить все заказы.
     /// </summary>
     [HttpGet]
-    [ProducesResponseType<IReadOnlyCollection<OrderListModelResponse>>(StatusCodes.Status200OK)]
+    [ProducesResponseType<OrderListModelResponse>(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAllAsync(
         CancellationToken cancellationToken,
         int offset = 0,
         int limit = 100)
     {
-        var result = await _orderService.GetAllAsync(offset, limit, cancellationToken);
+        var result = await orderService.GetAllAsync(offset, limit, cancellationToken);
 
-        return Ok(result.Select(o => o.ToResponse()).ToList());
+        return Ok(result.ToResponse(limit, offset));
     }
 
     /// <summary>
     /// Получить заказ по номеру.
     /// </summary>
-    /// <response code="200">Данные получены</response>
-    /// <response code="404">Заказ не найден</response>
+    /// <response code="200">Данные получены.</response>
+    /// <response code="404">Заказ не найден.</response>
     [HttpGet("{number}")]
     [ProducesResponseType<OrderModelResponse>(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -54,7 +47,7 @@ public sealed class OrderController : ControllerBase
             return BadRequest("Некорректный номер заказа");
         }
 
-        var result = await _orderService.GetAsync(orderNumber, cancellationToken);
+        var result = await orderService.GetAsync(orderNumber, cancellationToken);
         if (result is null)
         {
             return NotFound();
@@ -66,8 +59,8 @@ public sealed class OrderController : ControllerBase
     /// <summary>
     /// Создать заказ.
     /// </summary>
-    /// <response code="201">Запись добавлена в БД</response>
-    /// <response code="400">Ошибка валидации входных данных</response>
+    /// <response code="201">Заказ создан.</response>
+    /// <response code="400">Ошибка валидации входных данных.</response>
     [HttpPost]
     [ProducesResponseType<CreateOrderModelResponse>(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -81,7 +74,7 @@ public sealed class OrderController : ControllerBase
             return BadRequest("Ошибка валидации входных данных: " + string.Join(", ", errors));
         }
 
-        var orderNumber = await _orderService.CreateAsync(command, cancellationToken);
+        var orderNumber = await orderService.CreateAsync(command, cancellationToken);
         var response = new CreateOrderModelResponse(orderNumber.ToString());
         return Ok(response);
     }

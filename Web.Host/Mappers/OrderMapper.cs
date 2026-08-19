@@ -1,4 +1,3 @@
-using Application.Orders;
 using Domain.Orders;
 using Web.Contracts.Orders;
 
@@ -18,9 +17,17 @@ internal static class OrderMapper
             order.PickupDate);
     }
 
-    public static OrderListModelResponse ToResponse(this IReadOnlyCollection<Order> orders)
+    public static OrderListModelResponse ToResponse(this IReadOnlyCollection<Order> orders, int limit, int offset)
     {
-        // ToDo!
-        return null;
+        var items = orders.Select(o => new OrderListModelResponse.OrderListModelItem(
+            o.Number.ToString(),
+            o.SenderCity,
+            o.SenderAddress,
+            o.RecipientCity,
+            o.RecipientAddress,
+            o.Weight,
+            o.PickupDate)).ToList();
+
+        return new OrderListModelResponse(items, limit, offset);
     }
 }

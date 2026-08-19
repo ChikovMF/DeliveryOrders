@@ -5,7 +5,7 @@ namespace Web.Host;
 /// <summary>
 /// Сервис для применения миграций базы данных при запуске приложения.
 /// </summary>
-public class DatabaseMigrationHostedService(
+internal sealed class DatabaseMigrationHostedService(
     IDatabaseMigrator migrator,
     ILogger<DatabaseMigrationHostedService> logger)
     : IHostedService
