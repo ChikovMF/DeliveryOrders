@@ -1,6 +1,6 @@
 using Domain.Orders;
 
-namespace Application;
+namespace Application.Orders;
 
 /// <summary>
 /// Сервис работы с заказами.
@@ -20,4 +20,9 @@ public interface IOrderService
     /// <param name="limit">Максимальное количество возвращаемых заказов</param>
     /// <param name="cancellationToken">Токен отмены</param>
     Task<IReadOnlyList<Order>> GetAllAsync(int offset, int limit, CancellationToken cancellationToken);
+    
+    /// <summary>
+    /// Создать заказ.
+    /// </summary>
+    Task CreateAsync(CreateOrderCommand command, CancellationToken cancellationToken);
 }
