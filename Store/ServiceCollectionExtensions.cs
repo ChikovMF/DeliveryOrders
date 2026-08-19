@@ -19,6 +19,8 @@ public static class ServiceCollectionExtensions
 
         services.TryAddScoped<IOrderRepository, OrderRepository>();
 
+        services.TryAddSingleton<IDatabaseMigrator, DatabaseMigrator>();
+
         return services;
     }
 }
