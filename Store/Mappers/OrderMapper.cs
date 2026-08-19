@@ -3,7 +3,7 @@ using Store.Records;
 
 namespace Store.Mappers;
 
-public static class OrderMapper
+internal static class OrderMapper
 {
     public static OrderRecord ToRecord(this Order order)
     {
@@ -24,7 +24,7 @@ public static class OrderMapper
         var orderNumber = OrderNumber.Parse(record.Number);
 
         if (!Order.TryCreate(
-                OrderNumber.Parse(record.Number),
+                orderNumber,
                 record.SenderCity,
                 record.SenderAddress,
                 record.RecipientCity,

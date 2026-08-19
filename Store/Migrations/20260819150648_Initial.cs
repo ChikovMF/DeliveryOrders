@@ -15,7 +15,7 @@ namespace Store.Migrations
                 name: "orders",
                 columns: table => new
                 {
-                    Number = table.Column<string>(type: "character varying(32)", maxLength: 32, nullable: false),
+                    Number = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: false),
                     SenderCity = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
                     SenderAddress = table.Column<string>(type: "character varying(512)", maxLength: 512, nullable: false),
                     RecipientCity = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),

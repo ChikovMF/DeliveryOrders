@@ -12,7 +12,7 @@ using Store;
 namespace Store.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260819142216_Initial")]
+    [Migration("20260819150648_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -28,8 +28,8 @@ namespace Store.Migrations
             modelBuilder.Entity("Store.Records.OrderRecord", b =>
                 {
                     b.Property<string>("Number")
-                        .HasMaxLength(32)
-                        .HasColumnType("character varying(32)");
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
 
                     b.Property<DateTimeOffset>("PickupDate")
                         .HasColumnType("timestamp with time zone");

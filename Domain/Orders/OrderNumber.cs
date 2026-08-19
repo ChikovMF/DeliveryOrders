@@ -8,7 +8,7 @@ namespace Domain.Orders;
 public sealed record OrderNumber
 {
     private const char Delimiter = '_';
-    private const string Prefix = "ON"; 
+    private const string Prefix = "order";
 
     private readonly string _value;
 
@@ -22,7 +22,7 @@ public sealed record OrderNumber
     /// </summary>
     public static OrderNumber New()
     {
-        return new OrderNumber(Convert.ToBase64String(Guid.CreateVersion7().ToByteArray()));
+        return new OrderNumber(Guid.CreateVersion7().ToString("N"));
     }
 
     /// <summary>
@@ -53,19 +53,19 @@ public sealed record OrderNumber
             return false;
         }
 
-        if (text.Count(c => c == Delimiter) != 2)
+        if (text.Count(c => c == Delimiter) != 1)
         {
             return false;
         }
 
         var pieces = text.Split(Delimiter);
 
-        if (string.IsNullOrWhiteSpace(pieces[2]))
+        if (string.IsNullOrWhiteSpace(pieces.Last()))
         {
             return false;
         }
 
-        result = new OrderNumber(pieces[2]);
+        result = new OrderNumber(pieces.Last());
         return true;
     }
 

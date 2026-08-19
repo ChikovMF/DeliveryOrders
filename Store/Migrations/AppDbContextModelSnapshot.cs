@@ -25,8 +25,8 @@ namespace Store.Migrations
             modelBuilder.Entity("Store.Records.OrderRecord", b =>
                 {
                     b.Property<string>("Number")
-                        .HasMaxLength(32)
-                        .HasColumnType("character varying(32)");
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
 
                     b.Property<DateTimeOffset>("PickupDate")
                         .HasColumnType("timestamp with time zone");

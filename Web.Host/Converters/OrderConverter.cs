@@ -4,7 +4,7 @@ using Web.Contracts.Orders;
 
 namespace Web.Host.Converters;
 
-public static class OrderConverter
+internal static class OrderConverter
 {
     public static bool TryConvert(
         this CreateOrderModelRequest? request,

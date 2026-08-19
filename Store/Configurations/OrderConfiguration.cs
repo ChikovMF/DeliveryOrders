@@ -13,7 +13,7 @@ internal sealed class OrderConfiguration : IEntityTypeConfiguration<OrderRecord>
         builder.HasKey(o => o.Number);
         builder.Property(o => o.Number)
             .IsRequired()
-            .HasMaxLength(32);
+            .HasMaxLength(64);
 
         builder.Property(o => o.SenderCity)
             .IsRequired()

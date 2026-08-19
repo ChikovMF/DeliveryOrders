@@ -3,6 +3,7 @@ using Domain.Orders;
 using Microsoft.AspNetCore.Mvc;
 using Web.Contracts.Orders;
 using Web.Host.Converters;
+using Web.Host.Mappers;
 
 namespace Web.Host.Controllers;
 
@@ -32,14 +33,14 @@ public sealed class OrderController : ControllerBase
     {
         var result = await _orderService.GetAllAsync(offset, limit, cancellationToken);
 
-        return Ok(result);
+        return Ok(result.Select(o => o.ToResponse()).ToList());
     }
 
     /// <summary>
-    /// Получить паллет по Id
+    /// Получить заказ по номеру.
     /// </summary>
     /// <response code="200">Данные получены</response>
-    /// <response code="404">Запись не найдена в БД</response>
+    /// <response code="404">Заказ не найден</response>
     [HttpGet("{number}")]
     [ProducesResponseType<OrderModelResponse>(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -59,7 +60,7 @@ public sealed class OrderController : ControllerBase
             return NotFound();
         }
 
-        return Ok(result);
+        return Ok(result.ToResponse());
     }
 
     /// <summary>

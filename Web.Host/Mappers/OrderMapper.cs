@@ -4,7 +4,7 @@ using Web.Contracts.Orders;
 
 namespace Web.Host.Mappers;
 
-public static class OrderMapper
+internal static class OrderMapper
 {
     public static OrderModelResponse ToResponse(this Order order)
     {
