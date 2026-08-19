@@ -24,5 +24,5 @@ public interface IOrderService
     /// <summary>
     /// Создать заказ.
     /// </summary>
-    Task CreateAsync(CreateOrderCommand command, CancellationToken cancellationToken);
+    Task<OrderNumber> CreateAsync(CreateOrderCommand command, CancellationToken cancellationToken);
 }

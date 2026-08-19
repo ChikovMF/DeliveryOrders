@@ -17,21 +17,22 @@ internal sealed class OrderService : IOrderService
     public Task<IReadOnlyList<Order>> GetAllAsync(int offset, int limit, CancellationToken cancellationToken) =>
         _orderRepository.GetAllAsync(offset, limit, cancellationToken);
 
-    public Task CreateAsync(CreateOrderCommand command, CancellationToken cancellationToken)
+    public async Task<OrderNumber> CreateAsync(CreateOrderCommand command, CancellationToken cancellationToken)
     {
         if (!Order.TryCreateNew(
-            command.SenderCity,
-            command.SenderAddress,
-            command.RecipientCity,
-            command.RecipientAddress,
-            command.Weight,
-            command.PickupDate,
-            out var order,
-            out var error))
+                command.SenderCity,
+                command.SenderAddress,
+                command.RecipientCity,
+                command.RecipientAddress,
+                command.Weight,
+                command.PickupDate,
+                out var order,
+                out var errors))
         {
-            throw new InvalidOperationException("Ошибка создания заказа: " + error);
+            throw new InvalidOperationException("Ошибка создания заказа: " + string.Join(", ", errors));
         }
 
-        return _orderRepository.AddAsync(order, cancellationToken);
+        await _orderRepository.AddAsync(order, cancellationToken);
+        return order.Number;
     }
 }
