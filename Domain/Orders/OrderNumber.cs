@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 
-namespace Domain;
+namespace Domain.Orders;
 
 /// <summary>
 /// Номер заказа.
