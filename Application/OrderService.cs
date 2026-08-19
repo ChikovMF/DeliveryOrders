@@ -1,15 +1,15 @@
-﻿using Domain;
+﻿using Domain.Orders;
 
 namespace Application;
 
 public sealed class OrderService : IOrderService
 {
-    public Order? GetAsync(OrderNumber orderNumber, CancellationToken cancellationToken)
+    public Task<Order?> GetAsync(OrderNumber orderNumber, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }
 
-    public IReadOnlyList<Order> GetAllAsync(int offset, int limit, CancellationToken cancellationToken)
+    public Task<IReadOnlyList<Order>> GetAllAsync(int offset, int limit, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }
