@@ -19,7 +19,7 @@ internal sealed class OrderService : IOrderService
 
     public Task CreateAsync(CreateOrderCommand command, CancellationToken cancellationToken)
     {
-        if (!Order.TryCreate(
+        if (!Order.TryCreateNew(
             command.SenderCity,
             command.SenderAddress,
             command.RecipientCity,
