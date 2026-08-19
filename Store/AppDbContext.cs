@@ -4,7 +4,7 @@ using Store.Records;
 
 namespace Store;
 
-internal class AppDbContext : DbContext, IAppDbContext
+internal class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options), IAppDbContext
 {
     public DbSet<OrderRecord> Orders { get; init; }
 
