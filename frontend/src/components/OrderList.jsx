@@ -24,7 +24,7 @@ function OrderList({ orders, onOrderClick, currentPage, pageSize, hasMore, onNex
                 className="order-item"
                 onClick={() => onOrderClick(order.number)}
               >
-                <div className="order-number">Заказ №{order.number}</div>
+                <div className="order-number">Заказ {order.number}</div>
                 <div className="order-info">
                   {order.senderCity} → {order.recipientCity}
                 </div>
