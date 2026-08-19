@@ -1,10 +1,14 @@
 using Application;
 using Store;
 using Web.Host;
+using Web.Host.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<ValidationExceptionFilter>();
+});
 builder.Services.AddOpenApi();
 
 builder.Services.AddDbContext(builder.Configuration);

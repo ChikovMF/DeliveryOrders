@@ -1,4 +1,5 @@
-﻿using Domain.Orders;
+﻿using System.ComponentModel.DataAnnotations;
+using Domain.Orders;
 
 namespace Application.Orders;
 
@@ -29,7 +30,7 @@ internal sealed class OrderService : IOrderService
                 out var order,
                 out var errors))
         {
-            throw new InvalidOperationException("Ошибка создания заказа: " + string.Join(", ", errors));
+            throw new ValidationException("ошибка создания заказа: " + string.Join(", ", errors));
         }
 
         await _orderRepository.AddAsync(order, cancellationToken);

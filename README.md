@@ -16,7 +16,7 @@ docker run -d --name delivery-orders-db -e POSTGRES_DB=DeliveryOrders -e POSTGRE
 ### Запуск Backend
 
 ```bash
-cd Web.Host
+cd src/Web.Host
 dotnet run --urls "http://localhost:5196"
 ```
 

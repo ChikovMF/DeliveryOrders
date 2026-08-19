@@ -24,32 +24,32 @@ internal static class OrderConverter
 
         if (string.IsNullOrWhiteSpace(request.SenderCity))
         {
-            errorsList.Add("Город отправителя не может быть пустым");
+            errorsList.Add("город отправителя не может быть пустым");
         }
 
         if (string.IsNullOrWhiteSpace(request.SenderAddress))
         {
-            errorsList.Add("Адрес отправителя не может быть пустым");
+            errorsList.Add("адрес отправителя не может быть пустым");
         }
 
         if (string.IsNullOrWhiteSpace(request.RecipientCity))
         {
-            errorsList.Add("Город получателя не может быть пустым");
+            errorsList.Add("город получателя не может быть пустым");
         }
 
         if (string.IsNullOrWhiteSpace(request.RecipientAddress))
         {
-            errorsList.Add("Адрес получателя не может быть пустым");
+            errorsList.Add("адрес получателя не может быть пустым");
         }
 
         if (request.Weight is null)
         {
-            errorsList.Add("Вес посылки не может быть пустым");
+            errorsList.Add("вес посылки не может быть пустым");
         }
 
         if (request.PickupDate is null)
         {
-            errorsList.Add("Дата и время забора не может быть пустым");
+            errorsList.Add("дата и время забора не может быть пустым");
         }
 
         if (errorsList.Count > 0)

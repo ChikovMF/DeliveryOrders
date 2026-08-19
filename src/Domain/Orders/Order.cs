@@ -77,27 +77,27 @@ public sealed class Order
 
         if (string.IsNullOrWhiteSpace(senderCity))
         {
-            errorList.Add("Город отправителя обязателен");
+            errorList.Add("город отправителя обязателен");
         }
 
         if (string.IsNullOrWhiteSpace(senderAddress))
         {
-            errorList.Add("Адрес отправителя обязателен");
+            errorList.Add("адрес отправителя обязателен");
         }
 
         if (string.IsNullOrWhiteSpace(recipientCity))
         {
-            errorList.Add("Город получателя обязателен");
+            errorList.Add("город получателя обязателен");
         }
 
         if (string.IsNullOrWhiteSpace(recipientAddress))
         {
-            errorList.Add("Адрес получателя обязателен");
+            errorList.Add("адрес получателя обязателен");
         }
 
         if (weight <= 0)
         {
-            errorList.Add("Вес груза должен быть больше нуля");
+            errorList.Add("вес груза должен быть больше нуля");
         }
 
         if (errorList.Any())
@@ -128,9 +128,18 @@ public sealed class Order
         [NotNullWhen(true)] out Order? order,
         [NotNullWhen(false)] out IReadOnlyList<string>? errors)
     {
-        var orderNumber = OrderNumber.New();
+        order = null;
+        errors = null;
 
-        return TryCreate(
+        var ownErrors = new List<string>();
+
+        if (pickupDate < DateTimeOffset.UtcNow)
+        {
+            ownErrors.Add("дата забора не может быть в прошлом");
+        }
+
+        var orderNumber = OrderNumber.New();
+        var created = TryCreate(
             orderNumber,
             senderCity,
             senderAddress,
@@ -139,6 +148,15 @@ public sealed class Order
             weight,
             pickupDate,
             out order,
-            out errors);
+            out var createErrors);
+
+        if (ownErrors.Any() || createErrors?.Any() == true || !created || order is null)
+        {
+            order = null;
+            errors = ownErrors.Concat(createErrors ?? Enumerable.Empty<string>()).ToList();
+            return false;
+        }
+
+        return true;
     }
 }
