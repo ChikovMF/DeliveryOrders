@@ -1,5 +1,23 @@
 # Система управления заказами
 
+## Предварительные требования
+
+Для локального запуска требуется:
+
+| Инструмент | Версия    | Назначение |
+|---|-----------|---|
+| [.NET SDK](https://dotnet.microsoft.com/download) | 9.0+      | сборка и запуск backend |
+| [Node.js](https://nodejs.org/) | 20 LTS+   | сборка и запуск frontend |
+| [Docker](https://www.docker.com/) | последняя | запуск PostgreSQL в контейнере |
+
+Проверить, что всё установлено:
+```bash
+dotnet --version
+node --version
+npm --version
+docker --version
+```
+
 ## Запуск приложения
 
 Для запуска приложения необходимо поднять базу данных PostgreSQL, запустить backend и frontend.
