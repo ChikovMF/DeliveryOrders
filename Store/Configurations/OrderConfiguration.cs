@@ -13,7 +13,7 @@ internal sealed class OrderConfiguration : IEntityTypeConfiguration<OrderRecord>
         builder.HasKey(o => o.Number);
         builder.Property(o => o.Number)
             .IsRequired()
-            .HasMaxLength(32);;
+            .HasMaxLength(32);
 
         builder.Property(o => o.SenderCity)
             .IsRequired()
@@ -36,6 +36,7 @@ internal sealed class OrderConfiguration : IEntityTypeConfiguration<OrderRecord>
             .HasPrecision(18, scale: 3);
 
         builder.Property(o => o.PickupDate)
+            .HasColumnType("timestamp with time zone")
             .IsRequired();
     }
 }
