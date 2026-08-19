@@ -75,7 +75,10 @@ public sealed class OrderController(IOrderService orderService) : ControllerBase
         }
 
         var orderNumber = await orderService.CreateAsync(command, cancellationToken);
-        var response = new CreateOrderModelResponse(orderNumber.ToString());
+        var response = new CreateOrderModelResponse
+        {
+            Number = orderNumber.ToString()
+        };
         return Ok(response);
     }
 }

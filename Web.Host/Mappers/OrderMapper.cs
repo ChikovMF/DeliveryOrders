@@ -7,27 +7,36 @@ internal static class OrderMapper
 {
     public static OrderModelResponse ToResponse(this Order order)
     {
-        return new OrderModelResponse(
-            order.Number.ToString(),
-            order.SenderCity,
-            order.SenderAddress,
-            order.RecipientCity,
-            order.RecipientAddress,
-            order.Weight,
-            order.PickupDate);
+        return new OrderModelResponse
+        {
+            Number = order.Number.ToString(),
+            SenderCity = order.SenderCity,
+            SenderAddress = order.SenderAddress,
+            RecipientCity = order.RecipientCity,
+            RecipientAddress = order.RecipientAddress,
+            Weight = order.Weight,
+            PickupDate = order.PickupDate
+        };
     }
 
     public static OrderListModelResponse ToResponse(this IReadOnlyCollection<Order> orders, int limit, int offset)
     {
-        var items = orders.Select(o => new OrderListModelResponse.OrderListModelItem(
-            o.Number.ToString(),
-            o.SenderCity,
-            o.SenderAddress,
-            o.RecipientCity,
-            o.RecipientAddress,
-            o.Weight,
-            o.PickupDate)).ToList();
+        var items = orders.Select(o => new OrderListModelResponse.OrderListModelItem
+        {
+            Number = o.Number.ToString(),
+            SenderCity = o.SenderCity,
+            SenderAddress = o.SenderAddress,
+            RecipientCity = o.RecipientCity,
+            RecipientAddress = o.RecipientAddress,
+            Weight = o.Weight,
+            PickupDate = o.PickupDate
+        }).ToList();
 
-        return new OrderListModelResponse(items, limit, offset);
+        return new OrderListModelResponse
+        {
+            Limit = limit,
+            Offset = offset,
+            Orders = items,
+        };
     }
 }
